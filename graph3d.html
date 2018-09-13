@@ -1,0 +1,50 @@
+<html>
+<body style="background-color: grey;">
+<svg id="graph" height="400" width="800">
+</svg>
+<script>
+	function toY(y) {
+		return 300 - y;
+	}
+
+	var gragh = document.getElementById("graph");
+
+	{
+		var xAxis = document.createElementNS("http://www.w3.org/2000/svg", "line");
+
+		xAxis.setAttribute("x1", 0);
+		xAxis.setAttribute("y1", toY(0));
+		xAxis.setAttribute("x2", 300);
+		xAxis.setAttribute("y2", toY(-50));
+		xAxis.setAttribute("style", "stroke:rgb(255,0,0);stroke-width:2");
+
+		graph.appendChild(xAxis);
+	}
+
+	{
+		var yAxis = document.createElementNS("http://www.w3.org/2000/svg", "line");
+
+		yAxis.setAttribute("x1", 0);
+		yAxis.setAttribute("y1", toY(0));
+		yAxis.setAttribute("x2", 0);
+		yAxis.setAttribute("y2", toY(300));
+		yAxis.setAttribute("style", "stroke:rgb(0,255,0);stroke-width:2");
+
+		graph.appendChild(yAxis);
+	}
+
+	{
+		var zAxis = document.createElementNS("http://www.w3.org/2000/svg", "line");
+
+		zAxis.setAttribute("x1", 0);
+		zAxis.setAttribute("y1", toY(0));
+		zAxis.setAttribute("x2", 270);
+		zAxis.setAttribute("y2", toY(100));
+		zAxis.setAttribute("style", "stroke:rgb(0,0,255);stroke-width:2");
+
+		graph.appendChild(zAxis);
+	}
+
+</script>
+</body>
+</html>
