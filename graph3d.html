@@ -54,18 +54,24 @@
 	axis({ x: fromZ(300).x, y: toY(fromZ(300).y), colour: "blue" });
 
 
-	function toColour(v, vMax) {
-		return Math.abs(v * 255 / vMax);
+	function toColour(v) {
+		return Math.abs(v * 255);
 	}
 
+	var data = [];
 	var r = 200;
-	var scale = 1.25;
 	for (var z = 0; z < r; ++z) {
 		for (var x = 0; x < r; ++x) {
-			var yp = scale * r * Math.sin(Math.PI * x * 2 / r) * Math.sin(Math.PI * z / r);
-			pointAt(scale * x, yp, scale * z, "rgb(" + toColour(x, r * scale) + "," + toColour(0.5 * yp, r * scale) + "," + toColour(z, r * scale) + ")");
+			data.push({ x: x / r, y: Math.sin(Math.PI * x * 2 / r) * Math.sin(Math.PI * z / r), z: z / r });
 		}
 	}
+
+	var scale = 1.25;
+	data.forEach(function(d) {
+		pointAt(scale * r * d.x, scale * r * d.y, scale * r * d.z, "rgb(" + toColour(d.x) + "," + toColour(0.75 * d.y) + "," + toColour(d.z) + ")");
+	});
+
+
 })();
 
 </script>
