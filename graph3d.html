@@ -1,13 +1,17 @@
 <html>
 <body style="background-color: grey;">
-<svg id="graph" height="800" width="800">
+<svg id="graph" height="900" width="1000">
 </svg>
 <script>
 (function() {
 	var gragh = document.getElementById("graph")
 
+	function toX(x) {
+		return 500 + x;
+	}
+
 	function toY(y) {
-		return 300 - y;
+		return 400 - y;
 	}
 
 	function fromX(x) {
@@ -26,7 +30,7 @@
 			transZ = fromZ(z),
 			r = 0.75;
 
-		point.setAttribute("cx", transX.x + transZ.x);
+		point.setAttribute("cx", toX(transX.x + transZ.x));
 		point.setAttribute("cy", toY(y + transX.y + transZ.y));
 		point.setAttribute("r", r);
 		point.setAttribute("stroke", colour);
@@ -40,18 +44,18 @@
 	function axis(endPoint) {
 		var a = document.createElementNS("http://www.w3.org/2000/svg", "line");
 		
-		a.setAttribute("x1", 0);
-		a.setAttribute("y1", toY(0));
-		a.setAttribute("x2", endPoint.x);
-		a.setAttribute("y2", endPoint.y);
+		a.setAttribute("x1", toX(-endPoint.x));
+		a.setAttribute("y1", toY(-endPoint.y));
+		a.setAttribute("x2", toX(endPoint.x));
+		a.setAttribute("y2", toY(endPoint.y));
 		a.setAttribute("style", "stroke:" + endPoint.colour + ";stroke-width:2");
 
 		graph.appendChild(a);
 	}
 
-	axis({ x: fromX(300).x, y: toY(fromX(300).y), colour: "red" });
-	axis({ x: 0, y: toY(300), colour: "green" });
-	axis({ x: fromZ(300).x, y: toY(fromZ(300).y), colour: "blue" });
+	axis({ x: fromX(300).x, y: fromX(300).y, colour: "red" });
+	axis({ x: 0, y: 300, colour: "green" });
+	axis({ x: fromZ(300).x, y: fromZ(300).y, colour: "blue" });
 
 
 	function toColour(v) {
@@ -60,8 +64,8 @@
 
 	var data = [];
 	var r = 200;
-	for (var z = 0; z < r; ++z) {
-		for (var x = 0; x < r; ++x) {
+	for (var z = -r; z < r; ++z) {
+		for (var x = -r; x < r; ++x) {
 			data.push({ x: x / r, y: Math.sin(Math.PI * x * 2 / r) * Math.sin(Math.PI * z / r), z: z / r });
 		}
 	}
