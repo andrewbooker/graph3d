@@ -3,19 +3,47 @@
 <svg id="graph" height="400" width="800">
 </svg>
 <script>
+(function() {
+	var gragh = document.getElementById("graph")
+
 	function toY(y) {
 		return 300 - y;
 	}
 
-	var gragh = document.getElementById("graph");
+	function fromX(x) {
+		var drop = -Math.PI / 36;
+		return { x: x * Math.cos(drop), y: x * Math.sin(drop) };
+	}
 
+	function fromZ(z) {
+		var lift = Math.PI / 9;
+		return { x: z * Math.cos(lift), y: z * Math.sin(lift) };
+	}
+
+	function pointAt(x, y, z, colour) {
+		var point = document.createElementNS("http://www.w3.org/2000/svg", "circle"),
+			transX = fromX(x),
+			transZ = fromZ(z);
+
+		point.setAttribute("cx", transX.x + transZ.x);
+		point.setAttribute("cy", toY(y + transX.y + transZ.y));
+		point.setAttribute("r", 1);
+		point.setAttribute("stroke", colour);
+		point.setAttribute("stroke-width", "1");
+		point.setAttribute("fill", colour);
+
+		graph.appendChild(point);
+	}
+
+	
 	{
 		var xAxis = document.createElementNS("http://www.w3.org/2000/svg", "line");
+		
 
 		xAxis.setAttribute("x1", 0);
 		xAxis.setAttribute("y1", toY(0));
-		xAxis.setAttribute("x2", 300);
-		xAxis.setAttribute("y2", toY(-50));
+		xAxis.setAttribute("x2", fromX(300).x);
+		xAxis.setAttribute("y2", toY(fromX(300).y));
 		xAxis.setAttribute("style", "stroke:rgb(255,0,0);stroke-width:2");
 
 		graph.appendChild(xAxis);
@@ -38,12 +66,18 @@
 
 		zAxis.setAttribute("x1", 0);
 		zAxis.setAttribute("y1", toY(0));
-		zAxis.setAttribute("x2", 270);
-		zAxis.setAttribute("y2", toY(100));
+		zAxis.setAttribute("x2", fromZ(300).x);
+		zAxis.setAttribute("y2", toY(fromZ(300).y));
 		zAxis.setAttribute("style", "stroke:rgb(0,0,255);stroke-width:2");
 
 		graph.appendChild(zAxis);
 	}
+
+	pointAt(100, 100, 100, "black");
+	pointAt(0, 100, 100, "yellow");
+	pointAt(100, 0, 100, "orange");
+	pointAt(100, 100, 0, "purple");
+})();
 
 </script>
 </body>
