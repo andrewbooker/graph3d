@@ -3,7 +3,22 @@
 <svg id="graph" height="900" width="1000">
 </svg>
 <script>
-(function() {
+
+function eggsample() {
+	var d = [];
+	var r = 130;
+	for (var z = -r; z < r; ++z) {
+		for (var x = -r; x < r; ++x) {
+			d.push({ x: x / r, y: Math.sin(Math.PI * x * 2 / r) * Math.sin(Math.PI * z / r), z: z / r });
+		}
+	}
+	return {
+		data: d
+	};
+}
+
+
+function plot(data, showAxes) {
 	var gragh = document.getElementById("graph")
 
 	function toX(x) {
@@ -53,30 +68,23 @@
 		graph.appendChild(a);
 	}
 
-	axis({ x: fromX(300).x, y: fromX(300).y, colour: "red" });
-	axis({ x: 0, y: 300, colour: "green" });
-	axis({ x: fromZ(300).x, y: fromZ(300).y, colour: "blue" });
-
+	if (showAxes) {
+		axis({ x: fromX(300).x, y: fromX(300).y, colour: "red" });
+		axis({ x: 0, y: 300, colour: "green" });
+		axis({ x: fromZ(300).x, y: fromZ(300).y, colour: "blue" });
+	}
 
 	function toColour(v) {
 		return Math.abs(v * 255);
 	}
 
-	var data = [];
-	var r = 200;
-	for (var z = -r; z < r; ++z) {
-		for (var x = -r; x < r; ++x) {
-			data.push({ x: x / r, y: Math.sin(Math.PI * x * 2 / r) * Math.sin(Math.PI * z / r), z: z / r });
-		}
-	}
-
-	var scale = 1.25;
+	var scale = 250;
 	data.forEach(function(d) {
-		pointAt(scale * r * d.x, scale * r * d.y, scale * r * d.z, "rgb(" + toColour(d.x) + "," + toColour(0.75 * d.y) + "," + toColour(d.z) + ")");
+		pointAt(scale * d.x, scale * d.y, scale * d.z, "rgb(" + toColour(d.x) + "," + toColour(0.75 * d.y) + "," + toColour(d.z) + ")");
 	});
+}
 
-
-})();
+plot(eggsample().data, false);
 
 </script>
 </body>
