@@ -37,42 +37,22 @@
 	}
 
 	
-	{
-		var xAxis = document.createElementNS("http://www.w3.org/2000/svg", "line");
+	function axis(endPoint) {
+		var a = document.createElementNS("http://www.w3.org/2000/svg", "line");
 		
+		a.setAttribute("x1", 0);
+		a.setAttribute("y1", toY(0));
+		a.setAttribute("x2", endPoint.x);
+		a.setAttribute("y2", endPoint.y);
+		a.setAttribute("style", "stroke:" + endPoint.colour + ";stroke-width:2");
 
-		xAxis.setAttribute("x1", 0);
-		xAxis.setAttribute("y1", toY(0));
-		xAxis.setAttribute("x2", fromX(300).x);
-		xAxis.setAttribute("y2", toY(fromX(300).y));
-		xAxis.setAttribute("style", "stroke:rgb(255,0,0);stroke-width:2");
-
-		graph.appendChild(xAxis);
+		graph.appendChild(a);
 	}
 
-	{
-		var yAxis = document.createElementNS("http://www.w3.org/2000/svg", "line");
+	axis({ x: fromX(300).x, y: toY(fromX(300).y), colour: "red" });
+	axis({ x: 0, y: toY(300), colour: "green" });
+	axis({ x: fromZ(300).x, y: toY(fromZ(300).y), colour: "blue" });
 
-		yAxis.setAttribute("x1", 0);
-		yAxis.setAttribute("y1", toY(0));
-		yAxis.setAttribute("x2", 0);
-		yAxis.setAttribute("y2", toY(300));
-		yAxis.setAttribute("style", "stroke:rgb(0,255,0);stroke-width:2");
-
-		graph.appendChild(yAxis);
-	}
-
-	{
-		var zAxis = document.createElementNS("http://www.w3.org/2000/svg", "line");
-
-		zAxis.setAttribute("x1", 0);
-		zAxis.setAttribute("y1", toY(0));
-		zAxis.setAttribute("x2", fromZ(300).x);
-		zAxis.setAttribute("y2", toY(fromZ(300).y));
-		zAxis.setAttribute("style", "stroke:rgb(0,0,255);stroke-width:2");
-
-		graph.appendChild(zAxis);
-	}
 
 	function toColour(v, vMax) {
 		return Math.abs(v * 255 / vMax);
