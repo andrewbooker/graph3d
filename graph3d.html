@@ -1,6 +1,6 @@
 <html>
 <body style="background-color: grey;">
-<svg id="graph" height="400" width="800">
+<svg id="graph" height="800" width="800">
 </svg>
 <script>
 (function() {
@@ -23,13 +23,14 @@
 	function pointAt(x, y, z, colour) {
 		var point = document.createElementNS("http://www.w3.org/2000/svg", "circle"),
 			transX = fromX(x),
-			transZ = fromZ(z);
+			transZ = fromZ(z),
+			r = 0.75;
 
 		point.setAttribute("cx", transX.x + transZ.x);
 		point.setAttribute("cy", toY(y + transX.y + transZ.y));
-		point.setAttribute("r", 1);
+		point.setAttribute("r", r);
 		point.setAttribute("stroke", colour);
-		point.setAttribute("stroke-width", "1");
+		point.setAttribute("stroke-width", r);
 		point.setAttribute("fill", colour);
 
 		graph.appendChild(point);
@@ -73,10 +74,18 @@
 		graph.appendChild(zAxis);
 	}
 
-	pointAt(100, 100, 100, "black");
-	pointAt(0, 100, 100, "yellow");
-	pointAt(100, 0, 100, "orange");
-	pointAt(100, 100, 0, "purple");
+	function toColour(v, vMax) {
+		return Math.abs(v * 255 / vMax);
+	}
+
+	var r = 200;
+	var scale = 1.25;
+	for (var z = 0; z < r; ++z) {
+		for (var x = 0; x < r; ++x) {
+			var yp = scale * r * Math.sin(Math.PI * x * 2 / r) * Math.sin(Math.PI * z / r);
+			pointAt(scale * x, yp, scale * z, "rgb(" + toColour(x, r * scale) + "," + toColour(0.5 * yp, r * scale) + "," + toColour(z, r * scale) + ")");
+		}
+	}
 })();
 
 </script>
