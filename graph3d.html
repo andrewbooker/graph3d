@@ -2,21 +2,8 @@
 <body style="background-color: grey;">
 <svg id="graph" height="900" width="1000">
 </svg>
+<script src="eggsample.js"></script>
 <script>
-
-function eggsample() {
-	var d = [];
-	var r = 130;
-	for (var z = -r; z < r; ++z) {
-		for (var x = -r; x < r; ++x) {
-			d.push({ x: x / r, y: Math.sin(Math.PI * x * 2 / r) * Math.sin(Math.PI * z / r), z: z / r });
-		}
-	}
-	return {
-		data: d
-	};
-}
-
 
 function plot(data, showAxes) {
 	var gragh = document.getElementById("graph")
